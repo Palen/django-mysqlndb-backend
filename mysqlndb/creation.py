@@ -12,10 +12,10 @@ class DatabaseCreation(creation.DatabaseCreation):
         self.connection.features.confirm()
         self.supports_foreign_keys = getattr(self.connection.features, "supports_foreign_keys", True)
 
-    def sql_for_inline_foreign_key_references(self, field, known_models, style):
+    def sql_for_inline_foreign_key_references(self, model, field, known_models, style):
         if not self.supports_foreign_keys or not getattr(field, 'db_constraint', True):
             return [], False
-        return super(DatabaseCreation, self).sql_for_inline_foreign_key_references(field, known_models, style)
+        return super(DatabaseCreation, self).sql_for_inline_foreign_key_references(model, field, known_models, style)
 
     def sql_remove_table_constraints(self, model, references_to_delete, style):
         if not self.supports_foreign_keys:
